@@ -5,3 +5,10 @@
     background-color: black;
     color: white;
 }
+
+h2{
+    text-align: center;
+}
+.weather-image{
+    width: 50px;
+}
