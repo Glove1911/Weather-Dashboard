@@ -12,3 +12,9 @@ h2{
 .weather-image{
     width: 50px;
 }
+
+span{
+    background-color: yellow;
+    /* width: 4em; */
+
+}
