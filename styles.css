@@ -13,8 +13,21 @@ h2{
     width: 50px;
 }
 
-span{
+.index{
     background-color: yellow;
     /* width: 4em; */
 
+}
+.index2{
+    background-color: orange;
+
+}
+
+.inde3{
+    background-color: red;
+
+}
+
+.index4{
+    background-color: violet;
 }
