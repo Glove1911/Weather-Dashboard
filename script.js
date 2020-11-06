@@ -1,9 +1,9 @@
-// var cityArray = [];
+// Checks for cities in local storage
 $(document).ready(function () {
     var cities = JSON.parse(localStorage.getItem("cities"));
     renderCities();
     function renderCities() {
-        // var cities = JSON.parse(localStorage.getItem("cities"));
+        
         console.log(cities);
         if (cities) {
             var citiesEl = $("#cities")
@@ -21,24 +21,29 @@ $(document).ready(function () {
 
 
     }
-    // var cityArray = [];
+// Ajax pull for current search city info
+    cities = [];
     function citySearch() {
         $("#forecast").empty();
         $("ul").empty();
         var cityName = $("#city-name").val().trim().toUpperCase();
+        oldCity(cityName);
+    }
+    function oldCity(city) {
         var apiKey = "783997aa107a158f59a5294fd9806517";
-        var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + apiKey;
+        var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
 
         $.ajax({
             url: queryUrl,
             method: "GET"
         }).then(function (response) {
             console.log(response);
-            cities.push(cityName);
+            cities.push(city);
             var date = moment().format("L");
 
             localStorage.setItem("cities", JSON.stringify(cities));
-
+            var weather = response.weather[0].main;
+            console.log(weather);
             var cityLat = response.coord.lat;
             var cityLong = response.coord.lon;
             var searchCity = response.name;
@@ -56,6 +61,39 @@ $(document).ready(function () {
             $("ul").append(liEl2);
             $("ul").append(liEl3);
 
+            if (weather === "Clear") {
+                var clearEl = $("<img>").attr("src", "http://openweathermap.org/img/wn/01d@2x.png").addClass("weather-image");
+                $("h2").append(clearEl);
+
+            }
+
+            else if (weather === "Clouds") {
+                var clearEl = $("<img>").attr("src", "http://openweathermap.org/img/wn/04d@2x.png").addClass("weather-image");
+                $("h2").append(clearEl);
+
+            }
+
+            else if (weather === "Thunderstorm") {
+                var clearEl = $("<img>").attr("src", "http://openweathermap.org/img/wn/11d@2x.png").addClass("weather-image");
+                $("h2").append(clearEl)
+
+            }
+            else if (weather === "Rain") {
+                var clearEl = $("<img>").attr("src", "http://openweathermap.org/img/wn/09d@2x.png").addClass("weather-image");
+                $("h2").append(clearEl);
+
+            }
+
+            else if (weather === "Snow") {
+                var clearEl = $("<img>").attr("src", "http://openweathermap.org/img/wn/13d@2x.png").addClass("weather-image");
+                $("h2").append(clearEl);
+
+            }
+
+
+
+
+            // Ajax pull for uv index
             function cityUv() {
                 var queryUrl2 = "http://api.openweathermap.org/data/2.5/uvi?lat=" + cityLat + "&lon=" + cityLong + "&appid=" + apiKey;
 
@@ -65,28 +103,31 @@ $(document).ready(function () {
                 }).then(function (res) {
                     console.log(res);
                     var uvIndex = res.value;
-                    var liEl4 = $("<li>").text("UV Index " + uvIndex);
+                    var liEl4 = $("<li>").text("UV index ")
+                    var spanEl = $("<span>").text(uvIndex).addClass("index");
+                    liEl4.append(spanEl);
                     $("ul").append(liEl4);
 
+
                     if (res.value >= 3 || res.value <= 5) {
-                        liEl4.addClass("index");
+                        spanEl.addClass("index");
                     }
                     else if (res.value >= 6 || res.value <= 7) {
-                        liEl4.addClass("index2");
+                        spanEl.addClass("index2");
                     }
                     else if (res.value >= 8 || res.value <= 10) {
-                        liEl4.addClass("index3");
+                        spanEl.addClass("index3");
                     }
                     else {
-                        liEl4.addClass("index4");
+                        spanEl.addClass("index4");
                     }
                 });
             }
-
+                // Ajax pull for 5 day forecast
             function fiveDay() {
                 $("#5-day").empty();
 
-                var queryUrl3 = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + apiKey;
+                var queryUrl3 = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey;
 
                 $.ajax({
                     url: queryUrl3,
@@ -97,7 +138,6 @@ $(document).ready(function () {
                     for (i = 0; i < res2.list.length; i += 8) {
                         console.log(res2);
 
-                        // $(".col-md-9").append(h2El);
                         var deckEl = $("<div>").addClass("card shadow-lg text-black bg-primary mx-auto mb-10 p-2' style='width: 8.5rem; height: 11rem");
 
                         var date1 = res2.list[i].dt_txt;
@@ -116,7 +156,7 @@ $(document).ready(function () {
                         cardText1.text(date1);
                         cardHumid1.text(humid1);
 
-
+                        // Logic to generate weather icons
                         if (res2.list[i].weather[0].main === "Clear") {
                             var iconEl1 = $("<img>").attr("src", "http://openweathermap.org/img/wn/01d@2x.png").addClass("weather-image");
 
@@ -186,64 +226,26 @@ $(document).ready(function () {
         });
     }
 
+
     $(".search").on("click", function (event) {
         event.preventDefault();
         citySearch();
 
     });
 
-    $(".city-buttons").on("click", function () {
+    $(document).on("click", ".city-buttons", function () {
         var buttonText = $(this).text()
         console.log(buttonText);
-        searchHistory();
-        // cityUv();        
-        function searchHistory() {
-            $("ul").empty();
-            $(".forecast").empty();
-            // $("ul").empty();
-            var apiKey = "783997aa107a158f59a5294fd9806517";
-            var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + buttonText + "&appid=" + apiKey;
 
-            $.ajax({
-                url: queryUrl,
-                method: "GET"
-            }).then(function (response) {
-                var date = moment().format("L");
-                var cityLat = response.coord.lat;
-                var cityLong = response.coord.lon;
-                var searchCity = response.name;
-                $("h2").text(searchCity + " ");
-                $("h2").append("(" + date + ")");
-                console.log(date);
-                var cityTemp = response.main.temp;
-                var cityHumidity = response.main.humidity;
-                var cityWind = response.wind.speed;
-                var liEl = $("<li>").text("Temperature " + cityTemp);
-                $("ul").append(liEl);
-                var liEl2 = $("<li>").text("Humidity " + cityHumidity + "%");
-                var liEl3 = $("<li>").text("Wind Speed " + cityWind + " MPH");
-                $("ul").append(liEl2);
-                $("ul").append(liEl3);
-                cityUv();
-                function cityUv() {
-                    var queryUrl2 = "http://api.openweathermap.org/data/2.5/uvi?lat=" + cityLat + "&lon=" + cityLong + "&appid=" + apiKey;
-
-                    $.ajax({
-                        url: queryUrl2,
-                        method: "GET"
-                    }).then(function (res) {
-                        console.log(res);
-                        var uvIndex = res.value;
-                        var liEl4 = $("<li>").text("UV Index " + uvIndex);
-                        $("ul").append(liEl4);
-                    });
-                }
+        $("ul").empty();
+        $("#forecast").empty();
+        oldCity(buttonText);
 
 
-
-            })
-
-        }
     })
+    $(".clear-history").on("click", function () {
+        localStorage.clear();
+    })
+
 });
 
