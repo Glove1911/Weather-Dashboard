@@ -21,3 +21,8 @@ This project is created with:
 * Moment.js
 * Open Weather API
 
+# Getting Started
+
+This project has been deployed to GitHub pages.  To run, you can follow the deployoment link below. 
+
+[Deployed Application]
