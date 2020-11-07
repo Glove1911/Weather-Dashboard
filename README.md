@@ -25,4 +25,6 @@ This project is created with:
 
 This project has been deployed to GitHub pages.  To run, you can follow the deployoment link below. 
 
-[Deployed Application]
+[Deployed Application](https://glove1911.github.io/Weather-Dashboard/)
+
+<img src ="
