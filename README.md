@@ -13,11 +13,11 @@ This assignment focuses on the usage the 3rd party API OpenWeather to collect we
 This project is created with:
 
 Bootstrap 4
-CSS
-Font Awesome
-HTML:5
-JavaScript
-jQuery
-Moment.js
-Open Weather API
+* CSS
+* Font Awesome
+* HTML:5
+* JavaScript
+* jQuery
+* Moment.js
+* Open Weather API
 
