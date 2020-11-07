@@ -27,4 +27,4 @@ This project has been deployed to GitHub pages.  To run, you can follow the depl
 
 [Deployed Application](https://glove1911.github.io/Weather-Dashboard/)
 
-<img src ="
+<img src ="https://github.com/Glove1911/Weather-Dashboard/blob/main/B4FE9787-5FDB-45B2-B044-DDB71EF24E2F_1_105_c.jpeg">
