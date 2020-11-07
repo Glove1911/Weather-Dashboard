@@ -6,7 +6,7 @@ The goal of this assignment was to build a weather dashboard featuring dynamical
 
 # Usage
 
-This assignment focuses on the usage the 3rd party API OpenWeather to collect weather data for the application.  Additional information, includig acceptance criteria, can be found [here.] 
+This assignment focuses on the usage the 3rd party API OpenWeather to collect weather data for the application.  Additional information, includig acceptance criteria, can be found [here.] (https://github.com/Glove1911/Weather-Dashboard/blob/main/README%20copy.md)
 
 # Technologies
 
